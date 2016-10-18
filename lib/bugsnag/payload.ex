@@ -61,10 +61,8 @@ defmodule Bugsnag.Payload do
     {os_type, os_version} = :os.type
     device =
       %{}
-      |> Map.merge(%{osVersion: os_version})
-      |> Map.merge(%{hostname: actual_hostname})
-
-    IO.puts(device)
+      |> Map.merge(%{osVersion: Atom.to_string(os_version)})
+      |> Map.merge(%{hostname: to_string(actual_hostname)})
     if Enum.empty?(device),
     do:   event,
     else: Map.put(event, :device, device)
